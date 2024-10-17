@@ -3,6 +3,7 @@
 require_relative 'lib/player'
 require_relative 'lib/player_set'
 require_relative 'lib/board'
+require_relative 'lib/game'
 
 def player_names
   player1 = get_name(1)
@@ -26,4 +27,7 @@ player_set = PlayerSet.new
 board = Board.create_board(3, 3)
 Player.new(names[0], player_set)
 Player.new(names[1], player_set)
-puts board
+
+# start game
+game = Game.new(player_set, board)
+game.start

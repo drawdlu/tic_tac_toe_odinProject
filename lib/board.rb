@@ -25,7 +25,7 @@ class Board
     Board.new(board)
   end
 
-  def add_value(symbol, number)
+  def place_symbol(symbol, number)
     row_index = number / 3
     column_index = number % 3
     @board[row_index][column_index] = symbol
