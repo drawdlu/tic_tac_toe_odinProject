@@ -4,8 +4,8 @@
 class Player
   attr_reader :name, :symbol, :color
 
-  SYMBOL = %i[x y].freeze
-  COLOR = { x: 'red', y: 'blue' }.freeze
+  SYMBOL = %i[X Y].freeze
+  COLOR = { X: 'red', Y: 'blue' }.freeze
 
   def initialize(name, base)
     @name = name
