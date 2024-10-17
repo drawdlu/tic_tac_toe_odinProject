@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
-require_relative 'numbers'
-
 # Board data
 class Board
   attr_accessor :board
-
-  include Numbers
 
   def initialize(board)
     @board = board
