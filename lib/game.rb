@@ -16,20 +16,27 @@ class Game
   def start
     puts @board
 
-    until @win
+    loop do
       current_player = get_player(active)
-      number = input_loop(current_player)
+      number = get_move(current_player)
 
-      @board.place_symbol(current_player.symbol, number)
+      register_symbol(current_player.symbol, number)
       puts @board
+      break if @board.match?(current_player.symbol)
 
       self.active = switch_active(active)
     end
+    puts "#{get_player(active).name} has won the game!"
   end
 
   private
 
   attr_accessor :active
+
+  def register_symbol(symbol, number)
+    @board.place_symbol(symbol, number)
+    @board.save_pattern(symbol, number)
+  end
 
   def within_range?(number)
     number.to_i < 9 && number.to_i >= 0
@@ -47,7 +54,7 @@ class Game
     print "#{player.name}'s turn to pick a number: "
   end
 
-  def input_loop(player)
+  def get_move(player)
     loop do
       prompt_input(player)
       number = get_digit(gets.chomp)

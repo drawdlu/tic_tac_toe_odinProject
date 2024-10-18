@@ -9,6 +9,7 @@ class Board
 
   def initialize(board)
     @board = board
+    @pattern = { X: { row: [], column: [] }, Y: { row: [], column: [] } }
   end
 
   def self.create_board(row, column)
@@ -27,6 +28,30 @@ class Board
   def place_symbol(symbol, number)
     index = get_index(number)
     @board[index[:row]][index[:column]] = symbol
+  end
+
+  def save_pattern(symbol, number)
+    index = get_index(number)
+    @pattern[symbol][:row].push(index[:row])
+    @pattern[symbol][:column].push(index[:column])
+  end
+
+  def match?(symbol)
+    row_tally = @pattern[symbol][:row].tally
+    column_tally = @pattern[symbol][:column].tally
+
+    win_pattern?(row_tally, column_tally)
+  end
+
+  def win_pattern?(row_tally, column_tally)
+    vertical_horizontal?(row_tally) || vertical_horizontal?(column_tally)
+  end
+
+  def vertical_horizontal?(tally)
+    tally.each_value do |value|
+      return true if value == 3
+    end
+    false
   end
 
   def empty?(number)
