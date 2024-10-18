@@ -41,7 +41,7 @@ class Game
 
   def announce_outcome(player)
     if won?(player.symbol)
-      announce_winner(active)
+      announce_winner(player)
     else
       announce_draw
     end
