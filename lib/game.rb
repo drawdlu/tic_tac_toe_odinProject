@@ -6,6 +6,8 @@ require_relative 'numbers'
 class Game
   include Numbers
 
+  MOVES = 9
+
   def initialize(player_set, board)
     @player_set = player_set
     @board = board
@@ -15,26 +17,42 @@ class Game
   def start
     puts @board
 
-    loop do
+    MOVES.times do
       current_player = get_player(active)
       number = get_move(current_player)
 
       register_symbol(current_player.symbol, number)
       puts @board
-      break if @board.match?(current_player.symbol)
+      break if won?(current_player.symbol)
 
       self.active = switch_active(active)
     end
 
-    announce_winner(active)
+    announce_outcome(get_player(active))
   end
 
   private
 
   attr_accessor :active
 
-  def announce_winner(active)
-    puts "#{get_player(active).name} has won the game!"
+  def won?(symbol)
+    @board.match?(symbol)
+  end
+
+  def announce_outcome(player)
+    if won?(player.symbol)
+      announce_winner(active)
+    else
+      announce_draw
+    end
+  end
+
+  def announce_winner(player)
+    puts "#{player.name} has won the game!"
+  end
+
+  def announce_draw
+    puts 'The match was a draw!'
   end
 
   def register_symbol(symbol, number)
