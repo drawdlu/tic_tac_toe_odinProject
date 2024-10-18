@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+require_relative 'numbers'
+
 # Board data
 class Board
+  include Numbers
   attr_accessor :board
 
   def initialize(board)
@@ -22,9 +25,8 @@ class Board
   end
 
   def place_symbol(symbol, number)
-    row_index = number / 3
-    column_index = number % 3
-    @board[row_index][column_index] = symbol
+    index = get_index(number)
+    @board[index[:row]][index[:column]] = symbol
   end
 
   def to_s
@@ -45,5 +47,12 @@ class Board
   def print_line
     13.times { print '-' }
     puts ''
+  end
+
+  def get_index(number)
+    row_index = number / 3
+    column_index = number % 3
+
+    { row: row_index, column: column_index }
   end
 end

@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
+require_relative 'numbers'
+
 # Handle game loop
 class Game
+  include Numbers
+
   def initialize(player_set, board)
     @player_set = player_set
     @board = board
@@ -36,11 +40,5 @@ class Game
 
   def switch_active(active_index)
     active_index.zero? ? 1 : 0
-  end
-
-  # just return -1 if no numbers in input
-  def get_digit(number)
-    digit = number.match(/\d+/)
-    digit.nil? ? -1 : digit[0].to_i
   end
 end
