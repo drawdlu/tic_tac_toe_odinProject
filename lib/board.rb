@@ -36,15 +36,28 @@ class Board
   def save_pattern(symbol, number)
     index = get_index(number)
 
-    # for vertical or horizontal
+    save_horizonal_vertical(symbol, index)
+    save_diagonal_left(symbol, index)
+    save_diagonal_right(symbol, index)
+  end
+
+  def save_horizonal_vertical(symbol, index)
     @pattern[symbol][:row].push(index[:row])
     @pattern[symbol][:column].push(index[:column])
+  end
 
-    # for digonal from top left
+  def save_diagonal_left(symbol, index)
     @pattern[symbol][:diagonal_left] += 1 if index[:row] == index[:column]
+  end
 
-    # for diagonal from top right
-    save_diagonal_right(symbol, index)
+  def save_diagonal_right(symbol, index)
+    row = index[:row]
+    column = index[:column]
+    return unless row.zero? && column == 2 ||
+                  row == 1 && column == 1 ||
+                  row == 2 && column.zero?
+
+    @pattern[symbol][:diagonal_right] += 1
   end
 
   def match?(symbol)
@@ -61,16 +74,6 @@ class Board
   def diagonal?(symbol)
     @pattern[symbol][:diagonal_left] == 3 ||
       @pattern[symbol][:diagonal_right] == 3
-  end
-
-  def save_diagonal_right(symbol, index)
-    row = index[:row]
-    column = index[:column]
-    return unless row.zero? && column == 2 ||
-                  row == 1 && column == 1 ||
-                  row == 2 && column.zero?
-
-    @pattern[symbol][:diagonal_right] += 1
   end
 
   def vertical_horizontal?(tally)
