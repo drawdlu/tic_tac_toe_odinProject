@@ -9,7 +9,6 @@ class Game
   def initialize(player_set, board)
     @player_set = player_set
     @board = board
-    @win = false
     @active = 0
   end
 

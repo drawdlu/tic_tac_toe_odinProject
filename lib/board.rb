@@ -9,7 +9,10 @@ class Board
 
   def initialize(board)
     @board = board
-    @pattern = { X: { row: [], column: [] }, Y: { row: [], column: [] } }
+    @pattern = {
+      X: { row: [], column: [], diagonal: 0 },
+      Y: { row: [], column: [], diagonal: 0 }
+    }
   end
 
   def self.create_board(row, column)
@@ -34,16 +37,17 @@ class Board
     index = get_index(number)
     @pattern[symbol][:row].push(index[:row])
     @pattern[symbol][:column].push(index[:column])
+    @pattern[symbol][:diagonal] += 1 if index[:row] == index[:column]
   end
 
   def match?(symbol)
     row_tally = @pattern[symbol][:row].tally
     column_tally = @pattern[symbol][:column].tally
 
-    win_pattern?(row_tally, column_tally)
+    straight_line?(row_tally, column_tally) || @pattern[symbol][:diagonal] == 3
   end
 
-  def win_pattern?(row_tally, column_tally)
+  def straight_line?(row_tally, column_tally)
     vertical_horizontal?(row_tally) || vertical_horizontal?(column_tally)
   end
 
