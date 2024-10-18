@@ -25,12 +25,17 @@ class Game
 
       self.active = switch_active(active)
     end
-    puts "#{get_player(active).name} has won the game!"
+
+    announce_winner(active)
   end
 
   private
 
   attr_accessor :active
+
+  def announce_winner(active)
+    puts "#{get_player(active).name} has won the game!"
+  end
 
   def register_symbol(symbol, number)
     @board.place_symbol(symbol, number)
