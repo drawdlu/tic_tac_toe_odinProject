@@ -7,6 +7,8 @@ class Board
   include Numbers
   attr_accessor :board
 
+  SIZE = 3
+
   def initialize(board)
     @board = board
     @pattern = {
@@ -15,8 +17,8 @@ class Board
     }
   end
 
-  def self.create_board(row, column)
-    board = Array.new(row) { Array.new(column) }
+  def self.create_board
+    board = Array.new(SIZE) { Array.new(SIZE) }
     count = 0
     board.each do |arr|
       arr.map! do
@@ -72,13 +74,13 @@ class Board
   end
 
   def diagonal?(symbol)
-    @pattern[symbol][:diagonal_left] == 3 ||
-      @pattern[symbol][:diagonal_right] == 3
+    @pattern[symbol][:diagonal_left] == SIZE ||
+      @pattern[symbol][:diagonal_right] == SIZE
   end
 
   def vertical_horizontal?(tally)
     tally.each_value do |value|
-      return true if value == 3
+      return true if value == SIZE
     end
     false
   end

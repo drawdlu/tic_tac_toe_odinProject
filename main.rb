@@ -24,7 +24,7 @@ end
 # get names and initialize game
 names = player_names
 player_set = PlayerSet.new
-board = Board.create_board(3, 3)
+board = Board.create_board
 Player.new(names[0], player_set)
 Player.new(names[1], player_set)
 
