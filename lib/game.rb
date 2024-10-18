@@ -18,9 +18,7 @@ class Game
 
     until @win
       current_player = get_player(active)
-      prompt_input(current_player)
-      number = get_digit(gets.chomp)
-      redo unless within_range?(number) && @board.empty?(number)
+      number = input_loop(current_player)
 
       @board.place_symbol(current_player.symbol, number)
       puts @board
@@ -47,5 +45,13 @@ class Game
 
   def prompt_input(player)
     print "#{player.name}'s turn to pick a number: "
+  end
+
+  def input_loop(player)
+    loop do
+      prompt_input(player)
+      number = get_digit(gets.chomp)
+      return number if within_range?(number) && @board.empty?(number)
+    end
   end
 end
