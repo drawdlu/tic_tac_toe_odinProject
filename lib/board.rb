@@ -29,6 +29,12 @@ class Board
     @board[index[:row]][index[:column]] = symbol
   end
 
+  def empty?(number)
+    index = get_index(number)
+    char = get_digit(@board[index[:row]][index[:column]].to_s)
+    char != -1
+  end
+
   def to_s
     print_line
     @board.each do |row|

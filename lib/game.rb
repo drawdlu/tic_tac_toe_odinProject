@@ -17,11 +17,10 @@ class Game
     puts @board
 
     until @win
-      current_player = @player_set.players[active]
-
-      print "#{current_player.name}'s turn to pick a number: "
+      current_player = get_player(active)
+      prompt_input(current_player)
       number = get_digit(gets.chomp)
-      redo unless within_range?(number)
+      redo unless within_range?(number) && @board.empty?(number)
 
       @board.place_symbol(current_player.symbol, number)
       puts @board
@@ -40,5 +39,13 @@ class Game
 
   def switch_active(active_index)
     active_index.zero? ? 1 : 0
+  end
+
+  def get_player(active)
+    @player_set.players[active]
+  end
+
+  def prompt_input(player)
+    print "#{player.name}'s turn to pick a number: "
   end
 end
