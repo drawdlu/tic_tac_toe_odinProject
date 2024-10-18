@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'numbers'
+require 'colorize'
 
 # Board data
 class Board
@@ -95,8 +96,8 @@ class Board
     print_line
     @board.each do |row|
       print '|'
-      row.each do |symbol|
-        print " #{symbol} "
+      row.each do |element|
+        print_colored(element)
         print '|'
       end
       puts ''
@@ -105,6 +106,16 @@ class Board
   end
 
   private
+
+  def print_colored(element)
+    if element == Player::SYMBOL[0]
+      print " #{element} ".blue
+    elsif element == Player::SYMBOL[1]
+      print " #{element} ".red
+    else
+      print " #{element} ".yellow
+    end
+  end
 
   def print_line
     13.times { print '-' }
