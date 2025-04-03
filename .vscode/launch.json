@@ -10,6 +10,7 @@
             "request": "launch",
             "script": "${file}",
             "args": [],
+            "useTerminal": true,
             "askParameters": true
         },
         {
